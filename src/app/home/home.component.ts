@@ -5,7 +5,6 @@ import { BannerComponent } from './banner/banner.component';
 import { FeedToggleComponent } from './feed-toggle/feed-toggle.component';
 
 @Component({
-    selector: 'app-home',
     standalone: true,
     template: `
         <div class="home-page">

@@ -1,0 +1,15 @@
+import { Author } from './Author';
+
+export interface Article {
+    id: number;
+    title: string;
+    body: string;
+    authorId: number;
+    createdAt: string;
+    updatedAt: string;
+    tagList: string[];
+    description: string;
+    favorited: boolean;
+    favoritesCount: number;
+    author: Author;
+}

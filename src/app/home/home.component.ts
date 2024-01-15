@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
 import { ArticleListComponent } from '../article/ui/article-list/article-list.component';
 import { SidebarComponent } from '../article/ui/sidebar/sidebar.component';
+import { ArticlesService } from '../data-access/articles.service';
 import { BannerComponent } from './banner/banner.component';
 import { FeedToggleComponent } from './feed-toggle/feed-toggle.component';
 
@@ -14,7 +15,7 @@ import { FeedToggleComponent } from './feed-toggle/feed-toggle.component';
                 <div class="row">
                     <div class="col-md-9">
                         <app-feed-toggle />
-                        <app-article-list />
+                        <app-article-list [articles]="articlesService.articles()" [state]="articlesService.state()" />
                     </div>
 
                     <div class="col-md-3">
@@ -24,6 +25,11 @@ import { FeedToggleComponent } from './feed-toggle/feed-toggle.component';
             </div>
         </div>
     `,
-    imports: [BannerComponent, FeedToggleComponent, ArticleListComponent, SidebarComponent]
+    imports: [BannerComponent, FeedToggleComponent, ArticleListComponent, SidebarComponent],
+    providers: [ArticlesService]
 })
-export default class HomeComponent {}
+export default class HomeComponent {
+    constructor(public articlesService: ArticlesService) {
+        this.articlesService.getArticles();
+    }
+}

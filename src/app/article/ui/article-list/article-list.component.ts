@@ -1,12 +1,14 @@
 import { Component } from '@angular/core';
+import { ArticlesService } from '../../../data-access/articles.service';
 
 @Component({
     selector: 'app-article-list',
     standalone: true,
+    providers: [ArticlesService],
     template: `
         <div class="article-preview">
             <div class="article-meta">
-                <a href="profile.html"><img src="http://i.imgur.com/Qr71crq.jpg" /></a>
+                <a href="profile.html"><img alt="user" src="http://i.imgur.com/Qr71crq.jpg" /></a>
                 <div class="info">
                     <a href="" class="author">Eric Simons</a>
                     <span class="date">January 20th</span>
@@ -22,7 +24,7 @@ import { Component } from '@angular/core';
 
         <div class="article-preview">
             <div class="article-meta">
-                <a href="profile.html"><img src="http://i.imgur.com/N4VcUeJ.jpg" /></a>
+                <a href="profile.html"><img alt="user" src="http://i.imgur.com/N4VcUeJ.jpg" /></a>
                 <div class="info">
                     <a href="" class="author">Albert Pai</a>
                     <span class="date">January 20th</span>
@@ -41,4 +43,8 @@ import { Component } from '@angular/core';
         </div>
     `
 })
-export class ArticleListComponent {}
+export class ArticleListComponent {
+    constructor(public articlesService: ArticlesService) {
+        this.articlesService.getArticles();
+    }
+}

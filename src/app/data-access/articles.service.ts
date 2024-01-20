@@ -1,5 +1,6 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable, inject, signal } from '@angular/core';
+import { of, switchMap } from 'rxjs';
 import { Article } from '../models/Articles';
 import { injectDestroy } from '../utils/destory-notifier';
 
@@ -11,10 +12,16 @@ export class ArticlesService {
 
     articles = signal<Article[]>([]);
     state = signal<State>('loading');
-    getArticles() {
+    getArticles(selectedTag?: string) {
+        const url = selectedTag ? `/articles?tag=${selectedTag}` : '/articles';
         this.http
-            .get<{ articles: Article[]; articlesCount: number }>('/articles')
-            .pipe(this.destroy())
+            .get<{ articles: Article[]; articlesCount: number }>(url)
+            .pipe(
+                switchMap((articles) => {
+                    return of(articles);
+                }),
+                this.destroy()
+            )
             .subscribe({
                 next: ({ articles }) => {
                     this.articles.set(articles);

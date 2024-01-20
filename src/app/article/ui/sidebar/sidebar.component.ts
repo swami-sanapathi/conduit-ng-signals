@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, EventEmitter, Output, input } from '@angular/core';
 
 @Component({
     selector: 'app-sidebar',
@@ -7,16 +7,20 @@ import { Component } from '@angular/core';
         <div class="sidebar">
             <p>Popular Tags</p>
             <div class="tag-list">
-                <a href="" class="tag-pill tag-default">programming</a>
-                <a href="" class="tag-pill tag-default">javascript</a>
-                <a href="" class="tag-pill tag-default">emberjs</a>
-                <a href="" class="tag-pill tag-default">angularjs</a>
-                <a href="" class="tag-pill tag-default">react</a>
-                <a href="" class="tag-pill tag-default">mean</a>
-                <a href="" class="tag-pill tag-default">node</a>
-                <a href="" class="tag-pill tag-default">rails</a>
+                @for (tag of tags(); track tag) {
+                    <a
+                        (click)="selectedTag.emit(tag)"
+                        (keydown.enter)="selectedTag.emit(tag)"
+                        tabindex="0"
+                        class="tag-pill tag-default"
+                        >{{ tag }}</a
+                    >
+                }
             </div>
         </div>
     `
 })
-export class SidebarComponent {}
+export class SidebarComponent {
+    tags = input.required<string[]>();
+    @Output() selectedTag = new EventEmitter<string>();
+}

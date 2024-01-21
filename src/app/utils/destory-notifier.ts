@@ -1,7 +1,14 @@
 import { DestroyRef, inject } from '@angular/core';
-import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
+import { Subject } from 'rxjs';
 
 export function injectDestroy() {
+    const subject = new Subject<void>();
     const destroyRef = inject(DestroyRef);
-    return <T>() => takeUntilDestroyed<T>(destroyRef);
+
+    destroyRef.onDestroy(() => {
+        subject.next();
+        subject.complete();
+    });
+
+    return subject;
 }

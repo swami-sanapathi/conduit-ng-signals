@@ -20,7 +20,7 @@ import { FeedToggleComponent } from './feed-toggle/feed-toggle.component';
                     </div>
 
                     <div class="col-md-3">
-                        <app-sidebar [tags]="tagsService.tags()" (selectedTag)="articlesService.getArticles($event)" />
+                        <app-sidebar [tags]="tagsService.tags()" (selectedTag)="getArticlesByTag($event)" />
                     </div>
                 </div>
             </div>
@@ -37,5 +37,9 @@ export default class HomeComponent {
         // use combineLatest to get both articles and tags
         this.articlesService.getArticles();
         this.tagsService.getTags();
+    }
+
+    getArticlesByTag(tag: string) {
+        this.articlesService.getArticlesByTag(tag);
     }
 }

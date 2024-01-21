@@ -1,5 +1,6 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable, inject, signal } from '@angular/core';
+import { takeUntil } from 'rxjs';
 import { injectDestroy } from '../utils/destory-notifier';
 
 @Injectable()
@@ -11,7 +12,7 @@ export class TagsService {
     getTags() {
         this.http
             .get<{ tags: string[] }>('/tags')
-            .pipe(this.destroy())
+            .pipe(takeUntil(this.destroy))
             .subscribe(({ tags }) => {
                 this.tags.set(tags);
             });

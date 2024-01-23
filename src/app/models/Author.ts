@@ -4,3 +4,9 @@ export interface Author {
     image: string;
     following: boolean;
 }
+
+export interface SignupInfo {
+    username: string;
+    email: string;
+    password: string;
+}

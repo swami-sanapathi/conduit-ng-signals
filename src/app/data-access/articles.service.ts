@@ -1,10 +1,9 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable, inject, signal } from '@angular/core';
 import { Subject, takeUntil } from 'rxjs';
-import { Article } from '../models/Articles';
+import { Article, State } from '../models';
 import { injectDestroy } from '../utils/destory-notifier';
 
-type State = 'loading' | 'loaded' | 'error';
 @Injectable()
 export class ArticlesService {
     private http = inject(HttpClient);

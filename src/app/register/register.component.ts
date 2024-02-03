@@ -24,6 +24,7 @@ import { RegisterService } from './register.service';
                                     type="text"
                                     placeholder="Your Name"
                                     formControlName="username"
+                                    autocomplete="off"
                                 />
                             </fieldset>
                             <fieldset class="form-group">
@@ -32,6 +33,7 @@ import { RegisterService } from './register.service';
                                     type="text"
                                     placeholder="Email"
                                     formControlName="email"
+                                    autocomplete="off"
                                 />
                             </fieldset>
                             <fieldset class="form-group">
@@ -40,6 +42,7 @@ import { RegisterService } from './register.service';
                                     type="password"
                                     placeholder="Password"
                                     formControlName="password"
+                                    autocomplete="off"
                                 />
                             </fieldset>
                             <button

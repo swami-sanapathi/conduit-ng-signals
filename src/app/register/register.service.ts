@@ -2,11 +2,7 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable, inject, signal } from '@angular/core';
 import { SignupInfo } from '../models';
 import { State } from '../models/State';
-type Error = {
-    errors: {
-        [key: string]: string[];
-    };
-};
+import { processError } from '../utils/common-fns/error_handlers';
 @Injectable()
 export class RegisterService {
     state = signal<State>('loaded');
@@ -16,27 +12,13 @@ export class RegisterService {
     registerUser(user: SignupInfo) {
         this.state.set('loading');
         return this.http.post('/users', user).subscribe({
-            next: (res) => {
+            next: () => {
                 this.state.set('loaded');
-                console.log('User registered successfully', res);
             },
-            error: ({ error }: { error: Error }) => {
-                // {"errors":{"email":["can't be blank"]}}
+            error: (error) => {
                 this.state.set('error');
-                console.log('Error registering user', error);
-                this.processError(error);
-                // TODO: Handle error and return error messages to user
+                this.errors.set(processError(error));
             }
         });
-    }
-
-    processError(err: Error) {
-        const entries = Object.entries(err.errors);
-        console.log('Error registering user', err);
-        const errors = entries.map((entry) => {
-            const [key, value] = entry;
-            return `${key} ${(value as string[])[0]}`;
-        });
-        this.errors.set(errors);
     }
 }

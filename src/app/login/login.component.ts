@@ -1,4 +1,7 @@
-import { Component } from '@angular/core';
+import { Component, inject } from '@angular/core';
+import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
+import { ErrorComponent } from '../shared/ui/error.component';
+import { LoginService } from './login.service';
 
 @Component({
     standalone: true,
@@ -11,23 +14,54 @@ import { Component } from '@angular/core';
                         <p class="text-xs-center">
                             <a routerLink="/register">Need an account?</a>
                         </p>
-                        <ul class="error-messages">
-                            <li>That email is already taken</li>
-                        </ul>
 
-                        <form>
+                        @defer (when loginService._errors().length) {
+                            <app-error [errors]="loginService._errors()" />
+                        }
+
+                        <form [formGroup]="loginForm">
                             <fieldset class="form-group">
-                                <input class="form-control form-control-lg" type="text" placeholder="Email" />
+                                <input
+                                    class="form-control form-control-lg"
+                                    type="text"
+                                    placeholder="Email"
+                                    autocomplete="off"
+                                    formControlName="email"
+                                />
                             </fieldset>
                             <fieldset class="form-group">
-                                <input class="form-control form-control-lg" type="password" placeholder="Password" />
+                                <input
+                                    class="form-control form-control-lg"
+                                    type="password"
+                                    placeholder="Password"
+                                    autocomplete="off"
+                                    formControlName="password"
+                                />
                             </fieldset>
-                            <button class="btn btn-lg btn-primary pull-xs-right">Sign in</button>
+                            <button
+                                class="btn btn-lg btn-primary pull-xs-right"
+                                [disabled]="loginForm.invalid"
+                                (click)="loginService.login(loginForm.value)"
+                            >
+                                Sign in
+                            </button>
                         </form>
                     </div>
                 </div>
             </div>
         </div>
-    `
+    `,
+    imports: [ErrorComponent, ReactiveFormsModule],
+    providers: [LoginService]
 })
-export default class LoginComponent {}
+export default class LoginComponent {
+    loginService = inject(LoginService);
+    loginForm: FormGroup;
+    private fb = inject(FormBuilder);
+    constructor() {
+        this.loginForm = this.fb.nonNullable.group({
+            email: this.fb.nonNullable.control('', { validators: [Validators.required, Validators.email] }),
+            password: this.fb.nonNullable.control('', Validators.required)
+        });
+    }
+}

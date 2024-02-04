@@ -18,6 +18,10 @@ export class LoginService {
             ({ user }) => {
                 this.state.set('loaded');
                 localStorage.setItem('jwt', user.token);
+                localStorage.setItem('username', user.username);
+                localStorage.setItem('email', user.email);
+                localStorage.setItem('bio', user.bio);
+                localStorage.setItem('image', user.image);
             },
             (error: Error) => {
                 this.state.set('error');

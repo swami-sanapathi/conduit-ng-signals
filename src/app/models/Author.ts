@@ -10,6 +10,12 @@ export interface SignupInfo {
     email: string;
     password: string;
 }
+
+export type SignupResponse = SignupInfo & {
+    token: string;
+    bio: string;
+    image: string;
+};
 export interface UserResponse {
     email: string;
     token: string;

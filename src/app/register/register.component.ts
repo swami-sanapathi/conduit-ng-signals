@@ -1,5 +1,6 @@
 import { Component, inject } from '@angular/core';
 import { FormBuilder, FormGroup, ReactiveFormsModule } from '@angular/forms';
+import { Router } from '@angular/router';
 import { ErrorComponent } from '../shared/ui/error.component';
 import { RegisterService } from './register.service';
 
@@ -63,6 +64,7 @@ import { RegisterService } from './register.service';
     imports: [ReactiveFormsModule, ErrorComponent]
 })
 export default class RegisterComponent {
+    private router = inject(Router);
     form: FormGroup;
     registerService = inject(RegisterService);
     constructor(private fb: FormBuilder) {
@@ -77,6 +79,7 @@ export default class RegisterComponent {
         this.registerService.registerUser(this.form.value);
         if (this.registerService.state() === 'loaded') {
             this.form.reset();
+            this.router.navigate(['/']);
         }
     }
 }

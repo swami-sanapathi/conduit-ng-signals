@@ -75,6 +75,8 @@ export default class RegisterComponent {
 
     submit() {
         this.registerService.registerUser(this.form.value);
-        this.form.reset();
+        if (this.registerService.state() === 'loaded') {
+            this.form.reset();
+        }
     }
 }

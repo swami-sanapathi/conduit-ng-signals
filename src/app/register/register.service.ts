@@ -11,7 +11,7 @@ export class RegisterService {
 
     registerUser(user: SignupInfo) {
         this.state.set('loading');
-        return this.http.post('/users', user).subscribe({
+        return this.http.post('/users', { user }).subscribe({
             next: () => {
                 this.state.set('loaded');
             },

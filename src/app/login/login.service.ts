@@ -21,12 +21,14 @@ export class LoginService {
         this.state.set('loading');
         this.http.post<{ user: UserResponse }>('/users/login', { user }).subscribe(
             ({ user }) => {
+                this.sessionStorage.setItem('user', JSON.stringify(user));
                 this.sessionStorage.setItem('token', user.token);
                 this.sessionStorage.setItem('email', user.email);
                 this.sessionStorage.setItem('username', user.username);
                 this.sessionStorage.setItem('bio', user.bio);
                 this.sessionStorage.setItem('image', user.image);
                 this.authService.isAuthenticated.set(true);
+                this.authService.user.set(user);
                 this.state.set('loaded');
                 this.router.navigate(['/']);
             },

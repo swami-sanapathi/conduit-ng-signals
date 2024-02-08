@@ -19,12 +19,14 @@ import { AuthService } from '../../shared/services/auth.service';
                             <a class="nav-link" href="/editor"> <i class="ion-compose"></i>&nbsp;New Article </a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" href="/settings"> <i class="ion-gear-a"></i>&nbsp;Settings </a>
+                            <a class="nav-link" [routerLink]="['/settings']">
+                                <i class="ion-gear-a"></i>&nbsp;Settings
+                            </a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" href="/profile/eric-simons">
-                                <img src="" alt="user" class="user-pic" />
-                                Eric Simons
+                            <a class="nav-link" [routerLink]="['/profile', authService._user()?.username]">
+                                <img [src]="authService._user()?.image" alt="user" class="user-pic" />
+                                {{ authService._user()?.username }}
                             </a>
                         </li>
                     </ul>

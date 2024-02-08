@@ -12,7 +12,12 @@ export class SessionStorageService {
     }
 
     getItem(key: string) {
-        return this.sessionStorage?.getItem(key);
+        try {
+            const user = this.sessionStorage?.getItem(key);
+            if (user) return JSON.parse(user);
+        } catch (error) {
+            return {};
+        }
     }
 
     clear(): void {

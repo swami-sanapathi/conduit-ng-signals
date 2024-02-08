@@ -12,5 +12,15 @@ export default [
     {
         path: 'register',
         loadComponent: () => import('../register/register.component')
+    },
+    {
+        path: 'profile/:username',
+        loadComponent: () => import('../profile/profile.component'),
+        canMatch: []
+    },
+    {
+        path: 'settings',
+        loadComponent: () => import('../settings/settings.component'),
+        canMatch: []
     }
 ] as Routes;

@@ -10,13 +10,15 @@ import { AuthService } from '../../shared/services/auth.service';
         @if (authService._isAuthenticated()) {
             <nav class="navbar navbar-light">
                 <div class="container">
-                    <a class="navbar-brand" href="/">conduit</a>
+                    <a class="navbar-brand" routerLink="/">conduit</a>
                     <ul class="nav navbar-nav pull-xs-right">
                         <li class="nav-item">
-                            <a class="nav-link active" href="/">Home</a>
+                            <a class="nav-link active" routerLink="/">Home</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" href="/editor"> <i class="ion-compose"></i>&nbsp;New Article </a>
+                            <a class="nav-link" [routerLink]="['/editor']">
+                                <i class="ion-compose"></i>&nbsp;New Article
+                            </a>
                         </li>
                         <li class="nav-item">
                             <a class="nav-link" [routerLink]="['/settings']">

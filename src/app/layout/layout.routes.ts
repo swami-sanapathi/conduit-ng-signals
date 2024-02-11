@@ -19,6 +19,11 @@ export default [
         canMatch: []
     },
     {
+        path: 'editor',
+        loadComponent: () => import('../article/ui/edit-article/edit-article.component'),
+        canMatch: []
+    },
+    {
         path: 'settings',
         loadComponent: () => import('../settings/settings.component'),
         canMatch: []

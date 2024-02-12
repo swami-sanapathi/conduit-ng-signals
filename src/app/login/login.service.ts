@@ -14,6 +14,7 @@ export class LoginService {
     private authService = inject(AuthService);
     private sessionStorage = inject(SessionStorageService);
     private state = signal<State>('loaded');
+    _state = this.state.asReadonly();
     private errors = signal<string[]>([]);
     _errors = this.errors.asReadonly();
 

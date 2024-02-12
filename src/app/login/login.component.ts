@@ -40,7 +40,7 @@ import { LoginService } from './login.service';
                             </fieldset>
                             <button
                                 class="btn btn-lg btn-primary pull-xs-right"
-                                [disabled]="loginForm.invalid"
+                                [disabled]="loginForm.invalid || loginService._state() === 'loading'"
                                 (click)="loginService.login(loginForm.value)"
                             >
                                 Sign in

@@ -4,7 +4,7 @@ import { Router } from '@angular/router';
 import { State } from '../models';
 import { UserResponse } from '../models/Author';
 import { AuthService } from '../shared/services/auth.service';
-import { SessionStorageService } from '../shared/services/local_storage';
+import { LocalStorageService } from '../shared/services/local_storage';
 import { Error, processError } from '../utils/common-fns/error_handlers';
 
 @Injectable()
@@ -12,7 +12,7 @@ export class LoginService {
     private http = inject(HttpClient);
     private router = inject(Router);
     private authService = inject(AuthService);
-    private sessionStorage = inject(SessionStorageService);
+    private storage = inject(LocalStorageService);
     private state = signal<State>('loaded');
     _state = this.state.asReadonly();
     private errors = signal<string[]>([]);
@@ -22,12 +22,12 @@ export class LoginService {
         this.state.set('loading');
         this.http.post<{ user: UserResponse }>('/users/login', { user }).subscribe(
             ({ user }) => {
-                this.sessionStorage.setItem('user', JSON.stringify(user));
-                this.sessionStorage.setItem('token', user.token);
-                this.sessionStorage.setItem('email', user.email);
-                this.sessionStorage.setItem('username', user.username);
-                this.sessionStorage.setItem('bio', user.bio);
-                this.sessionStorage.setItem('image', user.image);
+                this.storage.setItem('user', JSON.stringify(user));
+                this.storage.setItem('token', user.token);
+                this.storage.setItem('email', user.email);
+                this.storage.setItem('username', user.username);
+                this.storage.setItem('bio', user.bio);
+                this.storage.setItem('image', user.image);
                 this.authService.isAuthenticated.set(true);
                 this.authService.user.set(user);
                 this.state.set('loaded');

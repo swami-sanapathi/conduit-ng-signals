@@ -1,13 +1,13 @@
 import { Injectable, computed, inject, signal } from '@angular/core';
 import { Router } from '@angular/router';
 import { UserResponse } from '../../models/Author';
-import { SessionStorageService } from './local_storage';
+import { LocalStorageService } from './local_storage';
 
 @Injectable({
     providedIn: 'root'
 })
 export class AuthService {
-    private storage = inject(SessionStorageService);
+    private storage = inject(LocalStorageService);
     private router = inject(Router);
     isAuthenticated = signal(false);
     user = signal<UserResponse | null>(null);

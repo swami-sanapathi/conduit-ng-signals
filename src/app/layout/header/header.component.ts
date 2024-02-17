@@ -1,13 +1,12 @@
-import { Component, inject } from '@angular/core';
+import { Component, input } from '@angular/core';
 import { RouterLink, RouterLinkActive } from '@angular/router';
-import { AuthService } from '../../shared/services/auth.service';
 
 @Component({
     selector: 'app-header',
     standalone: true,
     imports: [RouterLink, RouterLinkActive],
     template: `
-        @if (authService._isAuthenticated()) {
+        @if (isAuthenticated()) {
             <nav class="navbar navbar-light">
                 <div class="container">
                     <a class="navbar-brand" routerLink="/">conduit</a>
@@ -16,19 +15,34 @@ import { AuthService } from '../../shared/services/auth.service';
                             <a class="nav-link active" routerLink="/">Home</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" [routerLink]="['/editor']">
+                            <a
+                                class="nav-link"
+                                [routerLink]="['/editor']"
+                                routerLinkActive="active"
+                                [routerLinkActiveOptions]="{ exact: true }"
+                            >
                                 <i class="ion-compose"></i>&nbsp;New Article
                             </a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" [routerLink]="['/settings']">
+                            <a
+                                class="nav-link"
+                                [routerLink]="['/settings']"
+                                routerLinkActive="active"
+                                [routerLinkActiveOptions]="{ exact: true }"
+                            >
                                 <i class="ion-gear-a"></i>&nbsp;Settings
                             </a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" [routerLink]="['/profile', authService._user()?.username]">
-                                <img [src]="authService._user()?.image" alt="user" class="user-pic" />
-                                {{ authService._user()?.username }}
+                            <a
+                                class="nav-link"
+                                [routerLink]="['/profile', username()]"
+                                routerLinkActive="active"
+                                [routerLinkActiveOptions]="{ exact: true }"
+                            >
+                                <img [src]="" alt="{{ username() }}" class="user-pic" />
+                                {{ username() }}
                             </a>
                         </li>
                     </ul>
@@ -74,5 +88,6 @@ import { AuthService } from '../../shared/services/auth.service';
     `
 })
 export class HeaderComponent {
-    authService = inject(AuthService);
+    username = input.required();
+    isAuthenticated = input.required<boolean>();
 }

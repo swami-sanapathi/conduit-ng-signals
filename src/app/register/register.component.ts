@@ -77,7 +77,7 @@ export default class RegisterComponent {
 
     submit() {
         this.registerService.registerUser(this.form.value);
-        if (this.registerService.state() === 'loaded') {
+        if (this.registerService.state() === 'success') {
             this.form.reset();
             this.router.navigate(['/']);
         }

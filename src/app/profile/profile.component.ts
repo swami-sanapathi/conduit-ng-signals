@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, Input } from '@angular/core';
 
 @Component({
     selector: 'app-profile',
@@ -104,4 +104,8 @@ import { Component } from '@angular/core';
         </div>
     `
 })
-export default class ProfileComponent {}
+export default class ProfileComponent {
+    @Input() set username(username: string) {
+        console.log(username);
+    }
+}

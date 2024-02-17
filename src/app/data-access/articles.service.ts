@@ -1,7 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable, inject, signal } from '@angular/core';
 import { Subject, takeUntil } from 'rxjs';
-import { Article, State } from '../models';
+import { ApiStatus, Article } from '../shared/models';
 import { injectDestroy } from '../utils/destory-notifier';
 
 @Injectable()
@@ -11,7 +11,7 @@ export class ArticlesService {
     $selectedTag = new Subject<string>();
 
     articles = signal<Article[]>([]);
-    state = signal<State>('loading');
+    state = signal<ApiStatus>('loading');
     getArticles() {
         this.http
             .get<{ articles: Article[]; articlesCount: number }>('/articles')
@@ -19,7 +19,7 @@ export class ArticlesService {
             .subscribe({
                 next: ({ articles }) => {
                     this.articles.set(articles);
-                    this.state.set('loaded');
+                    this.state.set('success');
                 },
                 error: () => {
                     this.state.set('error');
@@ -39,7 +39,7 @@ export class ArticlesService {
             .subscribe({
                 next: ({ articles }) => {
                     this.articles.set(articles);
-                    this.state.set('loaded');
+                    this.state.set('success');
                 },
                 error: () => {
                     this.state.set('error');

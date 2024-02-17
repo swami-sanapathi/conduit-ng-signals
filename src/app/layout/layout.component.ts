@@ -1,5 +1,6 @@
-import { Component } from '@angular/core';
+import { Component, inject } from '@angular/core';
 import { RouterOutlet } from '@angular/router';
+import { AuthService } from '../shared/services/auth.service';
 import { FooterComponent } from './footer/footer.component';
 import { HeaderComponent } from './header/header.component';
 
@@ -7,10 +8,12 @@ import { HeaderComponent } from './header/header.component';
     selector: 'app-layout',
     standalone: true,
     template: `
-        <app-header />
+        <app-header [username]="authService._user()?.username" [isAuthenticated]="authService._isAuthenticated()" />
         <router-outlet />
         <app-footer />
     `,
     imports: [HeaderComponent, FooterComponent, RouterOutlet]
 })
-export default class LayoutComponent {}
+export default class LayoutComponent {
+    authService = inject(AuthService);
+}

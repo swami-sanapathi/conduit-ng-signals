@@ -12,11 +12,13 @@ export class LocalStorageService {
     }
 
     getItem(key: string) {
+        const data = this.localStorage?.getItem(key);
         try {
-            const user = this.localStorage?.getItem(key);
-            if (user) return JSON.parse(user);
+            if (data) {
+                return JSON.parse(data);
+            }
         } catch (error) {
-            return {};
+            return data;
         }
     }
 

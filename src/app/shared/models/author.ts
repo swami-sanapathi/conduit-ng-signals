@@ -16,6 +16,7 @@ export type SignupResponse = SignupInfo & {
     bio: string;
     image: string;
 };
+
 export interface UserResponse {
     email: string;
     token: string;

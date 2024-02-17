@@ -1,5 +1,5 @@
 import { Component, input } from '@angular/core';
-import { Article } from '../../../models/Articles';
+import { Article } from '../../../shared/models/articles';
 import { ArticlePreviewComponent } from '../article-preview/article-preview.component';
 
 @Component({

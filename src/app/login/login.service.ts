@@ -1,8 +1,8 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable, inject, signal } from '@angular/core';
 import { Router } from '@angular/router';
-import { State } from '../models';
-import { UserResponse } from '../models/Author';
+import { ApiStatus } from '../shared/models';
+import { UserResponse } from '../shared/models/author';
 import { AuthService } from '../shared/services/auth.service';
 import { LocalStorageService } from '../shared/services/local_storage';
 import { Error, processError } from '../utils/common-fns/error_handlers';
@@ -13,7 +13,7 @@ export class LoginService {
     private router = inject(Router);
     private authService = inject(AuthService);
     private storage = inject(LocalStorageService);
-    private state = signal<State>('loaded');
+    private state = signal<ApiStatus>('idle');
     _state = this.state.asReadonly();
     private errors = signal<string[]>([]);
     _errors = this.errors.asReadonly();
@@ -22,16 +22,8 @@ export class LoginService {
         this.state.set('loading');
         this.http.post<{ user: UserResponse }>('/users/login', { user }).subscribe(
             ({ user }) => {
-                this.storage.setItem('user', JSON.stringify(user));
-                this.storage.setItem('token', user.token);
-                this.storage.setItem('email', user.email);
-                this.storage.setItem('username', user.username);
-                this.storage.setItem('bio', user.bio);
-                this.storage.setItem('image', user.image);
-                this.authService.isAuthenticated.set(true);
-                this.authService.user.set(user);
-                this.state.set('loaded');
-                this.router.navigate(['/']);
+                this.authService.authenticate(user);
+                this.state.set('success');
             },
             (error: Error) => {
                 this.state.set('error');

@@ -1,7 +1,7 @@
 import { Component, EventEmitter, Output, input } from '@angular/core';
 
 @Component({
-    selector: 'app-sidebar',
+    selector: 'app-tags',
     standalone: true,
     template: `
         <div class="sidebar">
@@ -11,7 +11,7 @@ import { Component, EventEmitter, Output, input } from '@angular/core';
                     <a
                         (click)="selectedTag.emit(tag)"
                         (keydown.enter)="selectedTag.emit(tag)"
-                        tabindex="0"
+                        tabindex="{{ $index }}"
                         class="tag-pill tag-default"
                         >{{ tag }}</a
                     >
@@ -20,7 +20,7 @@ import { Component, EventEmitter, Output, input } from '@angular/core';
         </div>
     `
 })
-export class SidebarComponent {
+export class TagsComponent {
     tags = input.required<string[]>();
     @Output() selectedTag = new EventEmitter<string>();
 }

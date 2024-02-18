@@ -7,14 +7,16 @@ import { ArticlePreviewComponent } from '../article-preview/article-preview.comp
     standalone: true,
     imports: [ArticlePreviewComponent],
     template: `
-        @if (state() === 'loaded') {
+        @if (state() === 'success') {
             @for (article of articles(); track article.id) {
                 <app-article-preview [article]="article"></app-article-preview>
+            } @empty {
+                No articles are here... yet.
             }
         } @else if (state() === 'loading') {
-            <app-article-preview> Loading articles... </app-article-preview>
+            Loading articles...
         } @else {
-            <app-article-preview>No articles are here... yet. </app-article-preview>
+            No articles are here... yet.
         }
     `
 })

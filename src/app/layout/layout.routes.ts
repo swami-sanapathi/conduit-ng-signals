@@ -18,8 +18,8 @@ export default [
     {
         path: 'profile/:username',
         title: 'Profile',
-        loadComponent: () => import('../profile/profile.component')
-        // canMatch: []
+        loadComponent: () => import('../profile/profile.component'),
+        loadChildren: () => import('../profile/profile.routes')
     },
     {
         path: 'editor',

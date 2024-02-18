@@ -23,4 +23,5 @@ export interface UserResponse {
     username: string;
     bio: string;
     image: string;
+    following?: boolean;
 }

@@ -4,12 +4,18 @@ import { provideProfileToggle } from './profile.toggle.di';
 export default [
     {
         path: '',
-        providers: [provideProfileToggle('my')],
-        loadComponent: () => import('../profile/profile-articles/profile-articles.component')
-    },
-    {
-        path: 'favorites',
-        providers: [provideProfileToggle('favorited')],
-        loadComponent: () => import('../profile/profile-articles/profile-articles.component')
+        loadComponent: () => import('../profile/profile.component'),
+        children: [
+            {
+                path: '',
+                providers: [provideProfileToggle('my')],
+                loadComponent: () => import('../profile/profile-articles/profile-articles.component')
+            },
+            {
+                path: 'favorites',
+                providers: [provideProfileToggle('favorited')],
+                loadComponent: () => import('../profile/profile-articles/profile-articles.component')
+            }
+        ]
     }
 ] as Routes;

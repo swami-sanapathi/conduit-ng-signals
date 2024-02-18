@@ -2,7 +2,6 @@ import { Component, inject, signal } from '@angular/core';
 import { ArticleListComponent } from '../../article/ui/article-list/article-list.component';
 import { Article } from '../../shared/models';
 import { ProfileArticleService } from '../profile-article.service';
-import { ProfileService } from '../profile.service';
 
 @Component({
     standalone: true,
@@ -11,12 +10,10 @@ import { ProfileService } from '../profile.service';
         [state]="profileArticleService.state()"
     />`,
     imports: [ArticleListComponent],
-    providers: [ProfileArticleService, ProfileService]
+    providers: [ProfileArticleService]
 })
 export default class ProfileArticlesComponent {
     articles = signal<Article[]>([]);
     profileArticleService = inject(ProfileArticleService);
-    constructor() {
-        this.profileArticleService.getArticles();
-    }
+    constructor() {}
 }

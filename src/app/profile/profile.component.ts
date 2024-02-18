@@ -1,6 +1,6 @@
 import { Component, OnInit, inject, input } from '@angular/core';
-import { Router, RouterOutlet } from '@angular/router';
-import { ProfileArticleToggle } from './profile-article-toggle/profile-article-toggle.component';
+import { RouterLink, RouterOutlet } from '@angular/router';
+import { ProfileArticleToggleComponent } from './profile-article-toggle/profile-article-toggle.component';
 import { ProfileService } from './profile.service';
 
 @Component({
@@ -22,15 +22,20 @@ import { ProfileService } from './profile.service';
                                 {{ profileService.user()?.bio }}
                             </p>
 
-                            <button class="btn btn-sm btn-outline-secondary action-btn">
-                                <i class="ion-plus-round"></i>
-                                &nbsp; Follow {{ profileService.user()?.username }}
-                            </button>
+                            @if (!profileService.isOwner()) {
+                                <a class="btn btn-sm btn-outline-secondary action-btn">
+                                    <i class="ion-plus-round"></i>
+                                    &nbsp; {{ profileService.user()?.following ? 'Unfollow' : 'Follow' }}
+                                    {{ profileService.user()?.username }}
+                                </a>
+                            }
 
-                            <button class="btn btn-sm btn-outline-secondary action-btn" (click)="navigate()">
-                                <i class="ion-gear-a"></i>
-                                &nbsp; Edit Profile Settings
-                            </button>
+                            @if (profileService.isOwner()) {
+                                <a class="btn btn-sm btn-outline-secondary action-btn" routerLink="/settings">
+                                    <i class="ion-gear-a"></i>
+                                    &nbsp; Edit Profile Settings
+                                </a>
+                            }
                         </div>
                     </div>
                 </div>
@@ -39,26 +44,21 @@ import { ProfileService } from './profile.service';
             <div class="container">
                 <div class="row">
                     <div class="col-xs-12 col-md-10 offset-md-1">
-                        <app-profile-article-toggle />
+                        <app-profile-article-toggle [username]="profileService.user()?.username" />
                         <router-outlet />
                     </div>
                 </div>
             </div>
         </div>
     `,
-    imports: [RouterOutlet, ProfileArticleToggle],
+    imports: [RouterOutlet, ProfileArticleToggleComponent, RouterLink],
     providers: [ProfileService]
 })
 export default class ProfileComponent implements OnInit {
-    private router = inject(Router);
     profileService = inject(ProfileService);
     username = input.required<string>();
 
     ngOnInit(): void {
         this.profileService.getProfileByUsername(this.username());
-    }
-
-    navigate() {
-        this.router.navigate(['/settings']);
     }
 }

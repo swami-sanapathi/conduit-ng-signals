@@ -11,7 +11,7 @@ import { Component, EventEmitter, Output, input } from '@angular/core';
                     class="nav-link"
                     [class.active]="feedType() === 'user' && !selectedTag()"
                     [class.disabled]="!isAuthenticated()"
-                    (click)="userFeed.emit()"
+                    (click)="isAuthenticated() && userFeed.emit()"
                     >Your Feed</a
                 >
             </li>

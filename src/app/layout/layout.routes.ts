@@ -1,4 +1,6 @@
 import { Routes } from '@angular/router';
+import { authGuard } from '../shared/guards/auth.guard';
+import { nonAuthGuard } from '../shared/guards/non-auth.guard';
 
 export default [
     {
@@ -8,29 +10,31 @@ export default [
     {
         path: 'login',
         title: 'Login',
-        loadComponent: () => import('../login/login.component')
+        loadComponent: () => import('../login/login.component'),
+        canMatch: [nonAuthGuard]
     },
     {
         path: 'register',
         title: 'Register',
-        loadComponent: () => import('../register/register.component')
+        loadComponent: () => import('../register/register.component'),
+        canMatch: [nonAuthGuard]
     },
     {
         path: 'profile/:username',
         title: 'Profile',
-        loadComponent: () => import('../profile/profile.component'),
-        loadChildren: () => import('../profile/profile.routes')
+        loadChildren: () => import('../profile/profile.routes'),
+        canMatch: [authGuard]
     },
     {
         path: 'editor',
         title: 'Editor',
         loadComponent: () => import('../article/ui/edit-article/edit-article.component'),
-        canMatch: []
+        canMatch: [authGuard]
     },
     {
         path: 'settings',
         title: 'Settings',
         loadComponent: () => import('../settings/settings.component'),
-        canMatch: []
+        canMatch: [authGuard]
     }
 ] as Routes;

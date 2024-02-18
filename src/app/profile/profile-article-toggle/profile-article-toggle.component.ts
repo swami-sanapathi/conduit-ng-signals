@@ -1,5 +1,5 @@
 import { Component, input } from '@angular/core';
-import { ProfileFeed } from '../../shared/models';
+import { RouterLink, RouterLinkActive } from '@angular/router';
 @Component({
     selector: 'app-profile-article-toggle',
     standalone: true,
@@ -7,15 +7,28 @@ import { ProfileFeed } from '../../shared/models';
         <div class="articles-toggle">
             <ul class="nav nav-pills outline-active">
                 <li class="nav-item">
-                    <a class="nav-link" [class.active]="toggleType() === 'my'">My Articles</a>
+                    <a
+                        class="nav-link"
+                        [routerLink]="['/profile', username()]"
+                        routerLinkActive="active"
+                        [routerLinkActiveOptions]="{ exact: true }"
+                        >My Articles</a
+                    >
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" [class.active]="toggleType() === 'favorited'">Favorited Articles</a>
+                    <a
+                        class="nav-link"
+                        [routerLink]="['/profile', username(), 'favorites']"
+                        [routerLinkActiveOptions]="{ exact: true }"
+                        routerLinkActive="active"
+                        >Favorited Articles</a
+                    >
                 </li>
             </ul>
         </div>
-    `
+    `,
+    imports: [RouterLink, RouterLinkActive]
 })
 export class ProfileArticleToggleComponent {
-    toggleType = input<ProfileFeed>('my');
+    username = input.required();
 }

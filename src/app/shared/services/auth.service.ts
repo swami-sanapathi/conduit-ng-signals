@@ -15,7 +15,8 @@ export class AuthService {
     user = signal<UserResponse | null>(null);
 
     readonly _isAuthenticated = computed(() => {
-        return this.isAuthenticated() || !!this.storage.getItem('token') || false;
+        const auth = this.isAuthenticated();
+        return auth || !!this.storage.getItem('token') || false;
     });
     readonly _user = computed(() => {
         return this.user() ? this.user() : this.storage.getItem('user');

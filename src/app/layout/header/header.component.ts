@@ -6,14 +6,20 @@ import { RouterLink, RouterLinkActive } from '@angular/router';
     standalone: true,
     imports: [RouterLink, RouterLinkActive],
     template: `
-        @if (isAuthenticated()) {
-            <nav class="navbar navbar-light">
-                <div class="container">
-                    <a class="navbar-brand" routerLink="/">conduit</a>
-                    <ul class="nav navbar-nav pull-xs-right">
-                        <li class="nav-item">
-                            <a class="nav-link active" routerLink="/">Home</a>
-                        </li>
+        <nav class="navbar navbar-light">
+            <div class="container">
+                <a class="navbar-brand" routerLink="/">conduit</a>
+                <ul class="nav navbar-nav pull-xs-right">
+                    <li class="nav-item">
+                        <a
+                            class="nav-link active"
+                            routerLink="/"
+                            routerLinkActive="active"
+                            [routerLinkActiveOptions]="{ exact: true }"
+                            >Home</a
+                        >
+                    </li>
+                    @if (isAuthenticated()) {
                         <li class="nav-item">
                             <a
                                 class="nav-link"
@@ -45,23 +51,7 @@ import { RouterLink, RouterLinkActive } from '@angular/router';
                                 {{ username() }}
                             </a>
                         </li>
-                    </ul>
-                </div>
-            </nav>
-        } @else {
-            <nav class="navbar navbar-light">
-                <div class="container">
-                    <a class="navbar-brand" href="/">conduit</a>
-                    <ul class="nav navbar-nav pull-xs-right">
-                        <li class="nav-item">
-                            <a
-                                class="nav-link"
-                                [routerLink]="['/']"
-                                routerLinkActive="active"
-                                [routerLinkActiveOptions]="{ exact: true }"
-                                >Home</a
-                            >
-                        </li>
+                    } @else {
                         <li class="nav-item">
                             <a
                                 class="nav-link"
@@ -80,11 +70,10 @@ import { RouterLink, RouterLinkActive } from '@angular/router';
                                 >Sign up</a
                             >
                         </li>
-                    </ul>
-                </div>
-            </nav>
-        }
-        <!-- Authenticated -->
+                    }
+                </ul>
+            </div>
+        </nav>
     `
 })
 export class HeaderComponent {

@@ -25,3 +25,6 @@ export interface UserResponse {
     image: string;
     following?: boolean;
 }
+
+// create new interface as `UserProfile` but omit token from `UserResponse`
+export type UserProfile = Omit<UserResponse, 'token' | 'email'>;

@@ -9,6 +9,7 @@ import { HeaderComponent } from './header/header.component';
     standalone: true,
     template: `
         <app-header [username]="authService._user()?.username" [isAuthenticated]="authService._isAuthenticated()" />
+
         <router-outlet />
         <app-footer />
     `,

@@ -27,7 +27,11 @@ import { FeedToggleComponent } from './feed-toggle/feed-toggle.component';
                     </div>
 
                     <div class="col-md-3">
-                        <app-tags [tags]="tagsService.tags()" (selectedTag)="getArticlesByTag($event)" />
+                        <app-tags
+                            [tags]="tagsService.tags()"
+                            [status]="tagsService.status()"
+                            (selectedTag)="getArticlesByTag($event)"
+                        />
                     </div>
                 </div>
             </div>

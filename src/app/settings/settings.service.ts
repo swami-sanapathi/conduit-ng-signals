@@ -23,14 +23,12 @@ export class SettingService {
         return this.http
             .put<{ user: UserResponse }>('/user', { user })
             .pipe(
-                catchError((err) => {
-                    console.log(err);
+                catchError(() => {
                     this.status.set('error');
                     return EMPTY;
                 })
             )
             .subscribe(({ user }) => {
-                console.log(user);
                 this.authService.authenticate(user, ['/profile', user.username]);
                 this.status.set('success');
             });

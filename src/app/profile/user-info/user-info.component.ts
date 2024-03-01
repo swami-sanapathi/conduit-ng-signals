@@ -1,4 +1,5 @@
 import { Component, EventEmitter, Output, input } from '@angular/core';
+import { RouterLink } from '@angular/router';
 import { UserProfile } from '../../shared/models';
 
 @Component({
@@ -29,7 +30,8 @@ import { UserProfile } from '../../shared/models';
                 </div>
             </div>
         </div>
-    </div>`
+    </div>`,
+    imports: [RouterLink]
 })
 export class UserInfoComponent {
     user = input.required<UserProfile>();

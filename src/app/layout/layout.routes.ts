@@ -36,5 +36,10 @@ export default [
         title: 'Settings',
         loadComponent: () => import('../settings/settings.component'),
         canMatch: [authGuard]
+    },
+    {
+        path: 'article/:slug',
+        title: 'Article',
+        loadComponent: () => import('../article/ui/article-full-preview/article-full-preview.component')
     }
 ] as Routes;

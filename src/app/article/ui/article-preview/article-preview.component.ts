@@ -1,5 +1,5 @@
-import { Component, input } from '@angular/core';
-import { RouterLink } from '@angular/router';
+import { Component, inject, input } from '@angular/core';
+import { Router, RouterLink } from '@angular/router';
 import { Article } from '../../../shared/models/articles';
 
 @Component({
@@ -22,7 +22,7 @@ import { Article } from '../../../shared/models/articles';
                         <i class="ion-heart"></i> {{ article().favoritesCount }}
                     </button>
                 </div>
-                <a routerLink="/article" class="preview-link">
+                <a class="preview-link" (click)="navigateToArticle(article().slug)">
                     <h1>{{ article().title }}</h1>
                     <p>{{ article().description }}</p>
                     <span>Read more...</span>
@@ -36,4 +36,10 @@ import { Article } from '../../../shared/models/articles';
 })
 export class ArticlePreviewComponent {
     article = input.required<Article>();
+
+    private router = inject(Router);
+
+    navigateToArticle(slug: string) {
+        this.router.navigate(['/article', slug]);
+    }
 }

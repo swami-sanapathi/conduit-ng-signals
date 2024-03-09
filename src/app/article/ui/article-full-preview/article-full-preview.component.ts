@@ -19,7 +19,7 @@ import { ArticleBySlugService } from './article-by-slug.service';
                                     articleService.authorArticle()?.author?.username
                                 }}</a>
                                 <span class="date">{{
-                                    articleService.authorArticle()?.createdAt | date: 'MMMM d'
+                                    articleService.authorArticle()?.createdAt | date: 'MMMM d, y'
                                 }}</span>
                             </div>
                             @if (!articleService.isOwner()) {
@@ -70,7 +70,7 @@ import { ArticleBySlugService } from './article-by-slug.service';
                             <div class="info">
                                 <a href="" class="author">{{ articleService.authorArticle()?.author?.username }}</a>
                                 <span class="date">{{
-                                    articleService.authorArticle()?.createdAt | date: 'MMMM d'
+                                    articleService.authorArticle()?.createdAt | date: 'MMMM d, y'
                                 }}</span>
                             </div>
 
@@ -142,7 +142,9 @@ import { ArticleBySlugService } from './article-by-slug.service';
                                             <a href="/profile/jacob-schmidt" class="comment-author">{{
                                                 comment.author.username
                                             }}</a>
-                                            <span class="date-posted">{{ comment.createdAt | date: 'MMMM, d' }}</span>
+                                            <span class="date-posted">{{
+                                                comment.createdAt | date: 'MMMM, d, y'
+                                            }}</span>
                                         </div>
                                     </div>
                                 }

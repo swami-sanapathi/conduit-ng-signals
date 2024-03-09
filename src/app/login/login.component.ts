@@ -26,6 +26,7 @@ import { LoginService } from './login.service';
                                     type="text"
                                     placeholder="Email"
                                     autocomplete="off"
+                                    autofocus
                                     formControlName="email"
                                 />
                             </fieldset>

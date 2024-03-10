@@ -1,4 +1,4 @@
-import { Component, EventEmitter, Output, input } from '@angular/core';
+import { Component, input, output } from '@angular/core';
 import { RouterLink } from '@angular/router';
 import { UserProfile } from '../../shared/models';
 
@@ -36,5 +36,5 @@ import { UserProfile } from '../../shared/models';
 export class UserInfoComponent {
     user = input.required<UserProfile>();
     isOwner = input.required<boolean>();
-    @Output() followToggle = new EventEmitter<void>();
+    followToggle = output();
 }

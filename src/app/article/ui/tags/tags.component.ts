@@ -1,4 +1,4 @@
-import { Component, EventEmitter, Output, input } from '@angular/core';
+import { Component, input, output } from '@angular/core';
 import { ApiStatus } from '../../../shared/models';
 
 @Component({
@@ -30,5 +30,5 @@ import { ApiStatus } from '../../../shared/models';
 export class TagsComponent {
     tags = input.required<string[]>();
     status = input.required<ApiStatus>();
-    @Output() selectedTag = new EventEmitter<string>();
+    selectedTag = output<string>();
 }

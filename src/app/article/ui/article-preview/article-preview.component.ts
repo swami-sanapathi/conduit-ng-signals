@@ -1,4 +1,5 @@
-import { Component, inject, input } from '@angular/core';
+import { DatePipe } from '@angular/common';
+import { Component, inject, input, output } from '@angular/core';
 import { Router, RouterLink } from '@angular/router';
 import { Article } from '../../../shared/models/articles';
 
@@ -6,25 +7,36 @@ import { Article } from '../../../shared/models/articles';
     selector: 'app-article-preview',
     standalone: true,
     template: `
-        @if (article()) {
+        @if (article(); as article) {
             <div class="article-preview">
                 <div class="article-meta">
-                    <a [routerLink]="['/profile', article().author.username]" routerLinkActive="router-link-active"
-                        ><img alt="user" [src]="article().author.image"
+                    <a [routerLink]="['/profile', article.author.username]" routerLinkActive="router-link-active"
+                        ><img alt="user" [src]="article.author.image"
                     /></a>
                     <div class="info">
-                        <a [routerLink]="['/profile', article().author.username]" class="author">{{
-                            article().author.username
+                        <a [routerLink]="['/profile', article.author.username]" class="author">{{
+                            article.author.username
                         }}</a>
-                        <span class="date">{{ article().createdAt }}</span>
+                        <span class="date">{{ article.createdAt | date: 'MMM d, y' }}</span>
                     </div>
-                    <button class="btn btn-outline-primary btn-sm pull-xs-right">
-                        <i class="ion-heart"></i> {{ article().favoritesCount }}
+                    <button
+                        class="btn btn-sm pull-xs-right"
+                        [class.btn-outline-primary]="!article.favorited"
+                        [class.btn-primary]="article.favorited"
+                        (click)="toggleFavorite.emit(article)"
+                    >
+                        <i class="ion-heart"></i> {{ article.favoritesCount }}
                     </button>
                 </div>
-                <a class="preview-link" (click)="navigateToArticle(article().slug)">
-                    <h1>{{ article().title }}</h1>
-                    <p>{{ article().description }}</p>
+                <a class="preview-link" (click)="navigateToArticle(article.slug)">
+                    <h1>{{ article.title }}</h1>
+                    <p>{{ article.description }}</p>
+
+                    <ul class="tag-list">
+                        @for (tag of article.tagList; track $index) {
+                            <li class="tag-default tag-pill tag-outline">{{ tag }}</li>
+                        }
+                    </ul>
                     <span>Read more...</span>
                 </a>
             </div>
@@ -32,11 +44,11 @@ import { Article } from '../../../shared/models/articles';
             <ng-content></ng-content>
         }
     `,
-    imports: [RouterLink]
+    imports: [RouterLink, DatePipe]
 })
 export class ArticlePreviewComponent {
     article = input.required<Article>();
-
+    toggleFavorite = output<Article>();
     private router = inject(Router);
 
     navigateToArticle(slug: string) {

@@ -1,4 +1,4 @@
-import { Component, input } from '@angular/core';
+import { Component, input, output } from '@angular/core';
 import { Article } from '../../../shared/models/articles';
 import { ArticlePreviewComponent } from '../article-preview/article-preview.component';
 
@@ -9,7 +9,7 @@ import { ArticlePreviewComponent } from '../article-preview/article-preview.comp
     template: `
         @if (state() === 'success') {
             @for (article of articles(); track article.id) {
-                <app-article-preview [article]="article"></app-article-preview>
+                <app-article-preview [article]="article" (toggleFavorite)="toggleFavorite.emit($event)" />
             } @empty {
                 No articles are here... yet.
             }
@@ -23,4 +23,5 @@ import { ArticlePreviewComponent } from '../article-preview/article-preview.comp
 export class ArticleListComponent {
     articles = input.required<Article[]>();
     state = input.required<string>();
+    toggleFavorite = output<Article>();
 }

@@ -1,5 +1,6 @@
 import { HttpClient, HttpParams } from '@angular/common/http';
 import { Injectable, inject, signal } from '@angular/core';
+import { Router } from '@angular/router';
 import { EMPTY, catchError, takeUntil } from 'rxjs';
 import { ApiStatus, Article } from '../shared/models';
 import { injectDestroy } from '../utils/destory-notifier';
@@ -9,6 +10,7 @@ type FeedType = 'global' | 'user' | 'tag';
 @Injectable()
 export class ArticlesService {
     private http = inject(HttpClient);
+    private router = inject(Router);
     private destroy = injectDestroy();
 
     articles = signal<Article[]>([]);
@@ -66,5 +68,25 @@ export class ArticlesService {
                     this.state.set('error');
                 }
             });
+    }
+
+    toggleFavorite(article: Article): void {
+        if (article.favorited) {
+            this.http.delete(`/articles/${article.slug}/favorite`).subscribe(() => {
+                this.articles.update((articles) => {
+                    const index = articles.findIndex((a) => a.slug === article.slug);
+                    articles[index] = { ...article, favorited: false, favoritesCount: article.favoritesCount - 1 };
+                    return [...articles];
+                });
+            });
+        }
+        // TODO: multiple requests can be made if the user clicks the button
+        this.http.post(`/articles/${article.slug}/favorite`, {}).subscribe(() => {
+            this.articles.update((articles) => {
+                const index = articles.findIndex((a) => a.slug === article.slug);
+                articles[index] = { ...article, favorited: true, favoritesCount: article.favoritesCount + 1 };
+                return [...articles];
+            });
+        });
     }
 }

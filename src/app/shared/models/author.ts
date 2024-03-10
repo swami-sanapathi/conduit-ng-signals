@@ -11,7 +11,11 @@ export interface SignupInfo {
     password: string;
 }
 
-export type SignupResponse = SignupInfo & {
+// omit password from SignupInfo and include
+// token: string;
+// bio: string;
+// image: string;
+export type SignupResponse = Omit<SignupInfo, 'password'> & {
     token: string;
     bio: string;
     image: string;
@@ -23,8 +27,9 @@ export interface UserResponse {
     username: string;
     bio: string;
     image: string;
-    following?: boolean;
 }
 
 // create new interface as `UserProfile` but omit token from `UserResponse`
-export type UserProfile = Omit<UserResponse, 'token' | 'email'>;
+export type UserProfile = Omit<UserResponse, 'token' | 'email'> & {
+    following: boolean;
+};

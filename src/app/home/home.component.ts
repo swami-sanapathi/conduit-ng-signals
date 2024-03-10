@@ -23,7 +23,11 @@ import { FeedToggleComponent } from './feed-toggle/feed-toggle.component';
                             (userFeed)="articlesService.getArticles('user')"
                             (globalFeed)="articlesService.getArticles('global')"
                         />
-                        <app-article-list [articles]="articlesService.articles()" [state]="articlesService.state()" />
+                        <app-article-list
+                            [articles]="articlesService.articles()"
+                            [state]="articlesService.state()"
+                            (toggleFavorite)="articlesService.toggleFavorite($event)"
+                        />
                     </div>
 
                     <div class="col-md-3">

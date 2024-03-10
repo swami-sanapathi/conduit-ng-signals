@@ -1,4 +1,4 @@
-import { Component, EventEmitter, Output, input } from '@angular/core';
+import { Component, input, output } from '@angular/core';
 
 @Component({
     selector: 'app-feed-toggle',
@@ -32,8 +32,8 @@ import { Component, EventEmitter, Output, input } from '@angular/core';
     `
 })
 export class FeedToggleComponent {
-    @Output() userFeed = new EventEmitter<string>();
-    @Output() globalFeed = new EventEmitter<string>();
+    userFeed = output();
+    globalFeed = output();
     feedType = input('global');
     isAuthenticated = input.required<boolean>();
     selectedTag = input<string | null>();

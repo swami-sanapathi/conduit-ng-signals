@@ -28,7 +28,7 @@ export default [
     {
         path: 'editor',
         title: 'Editor',
-        loadComponent: () => import('../article/ui/edit-article/edit-article.component'),
+        loadChildren: () => import('../article/ui/editor/editor.routes'),
         canMatch: [authGuard]
     },
     {
@@ -40,6 +40,6 @@ export default [
     {
         path: 'article/:slug',
         title: 'Article',
-        loadComponent: () => import('../article/ui/article-full-preview/article-full-preview.component')
+        loadComponent: () => import('../article/ui/article-meta-data/article-meta-data.component')
     }
 ] as Routes;

@@ -12,7 +12,7 @@ import { RouterLink, RouterLinkActive } from '@angular/router';
                 <ul class="nav navbar-nav pull-xs-right">
                     <li class="nav-item">
                         <a
-                            class="nav-link active"
+                            class="nav-link"
                             routerLink="/"
                             routerLinkActive="active"
                             [routerLinkActiveOptions]="{ exact: true }"

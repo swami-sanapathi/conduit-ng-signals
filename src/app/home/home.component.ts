@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { ChangeDetectionStrategy, Component } from '@angular/core';
 import { ArticleListComponent } from '../article/ui/article-list/article-list.component';
 import { TagsComponent } from '../article/ui/tags/tags.component';
 import { ArticlesService } from '../data-access/articles.service';
@@ -42,7 +42,8 @@ import { FeedToggleComponent } from './feed-toggle/feed-toggle.component';
         </div>
     `,
     imports: [BannerComponent, FeedToggleComponent, ArticleListComponent, TagsComponent],
-    providers: [ArticlesService, TagsService]
+    providers: [ArticlesService, TagsService],
+    changeDetection: ChangeDetectionStrategy.OnPush
 })
 export default class HomeComponent {
     constructor(
@@ -56,6 +57,6 @@ export default class HomeComponent {
     }
 
     getArticlesByTag(tag: string) {
-        this.articlesService.getArticles('global', tag);
+        this.articlesService.getArticles('tag', tag);
     }
 }

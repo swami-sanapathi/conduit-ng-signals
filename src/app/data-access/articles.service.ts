@@ -71,22 +71,29 @@ export class ArticlesService {
     }
 
     toggleFavorite(article: Article): void {
+        this.destroy.next();
         if (article.favorited) {
-            this.http.delete(`/articles/${article.slug}/favorite`).subscribe(() => {
-                this.articles.update((articles) => {
-                    const index = articles.findIndex((a) => a.slug === article.slug);
-                    articles[index] = { ...article, favorited: false, favoritesCount: article.favoritesCount - 1 };
-                    return [...articles];
+            this.http
+                .delete(`/articles/${article.slug}/favorite`)
+                .pipe(takeUntil(this.destroy))
+                .subscribe(() => {
+                    this.articles.update((articles) => {
+                        const index = articles.findIndex((a) => a.slug === article.slug);
+                        articles[index] = { ...article, favorited: false, favoritesCount: article.favoritesCount - 1 };
+                        return [...articles];
+                    });
                 });
-            });
+        } else {
+            this.http
+                .post(`/articles/${article.slug}/favorite`, null)
+                .pipe(takeUntil(this.destroy))
+                .subscribe(() => {
+                    this.articles.update((articles) => {
+                        const index = articles.findIndex((a) => a.slug === article.slug);
+                        articles[index] = { ...article, favorited: true, favoritesCount: article.favoritesCount + 1 };
+                        return [...articles];
+                    });
+                });
         }
-        // TODO: multiple requests can be made if the user clicks the button
-        this.http.post(`/articles/${article.slug}/favorite`, {}).subscribe(() => {
-            this.articles.update((articles) => {
-                const index = articles.findIndex((a) => a.slug === article.slug);
-                articles[index] = { ...article, favorited: true, favoritesCount: article.favoritesCount + 1 };
-                return [...articles];
-            });
-        });
     }
 }

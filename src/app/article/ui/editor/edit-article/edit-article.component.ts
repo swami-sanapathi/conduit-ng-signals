@@ -1,4 +1,4 @@
-import { Component, effect, inject, input } from '@angular/core';
+import { ChangeDetectionStrategy, Component, effect, inject, input } from '@angular/core';
 import { ReactiveFormsModule } from '@angular/forms';
 import { AppSharedArticleFormComponent } from '../../../../shared/ui/article-form/article-form.component';
 import { ErrorComponent } from '../../../../shared/ui/error.component';
@@ -19,7 +19,8 @@ import { EditArticleService } from '../editor.service';
         </app-shared-layout>
     `,
     providers: [EditArticleService],
-    imports: [ReactiveFormsModule, ErrorComponent, AppSharedArticleFormComponent, AppSharedLayoutComponent]
+    imports: [ReactiveFormsModule, ErrorComponent, AppSharedArticleFormComponent, AppSharedLayoutComponent],
+    changeDetection: ChangeDetectionStrategy.OnPush
 })
 export default class EditArticleComponent {
     articleService = inject(EditArticleService);

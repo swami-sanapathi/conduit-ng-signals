@@ -1,4 +1,4 @@
-import { Component, inject } from '@angular/core';
+import { ChangeDetectionStrategy, Component, inject } from '@angular/core';
 import { FormControl, FormGroup, ReactiveFormsModule } from '@angular/forms';
 import { AuthService } from '../shared/services/auth.service';
 import { SettingService } from './settings.service';
@@ -73,7 +73,8 @@ import { SettingService } from './settings.service';
         </div>
     `,
     imports: [ReactiveFormsModule],
-    providers: [SettingService]
+    providers: [SettingService],
+    changeDetection: ChangeDetectionStrategy.OnPush
 })
 export default class SettingsComponent {
     readonly authService = inject(AuthService);

@@ -1,4 +1,4 @@
-import { Component, inject } from '@angular/core';
+import { ChangeDetectionStrategy, Component, inject } from '@angular/core';
 import { FormBuilder, FormGroup, ReactiveFormsModule } from '@angular/forms';
 import { Router } from '@angular/router';
 import { ErrorComponent } from '../shared/ui/error.component';
@@ -61,7 +61,8 @@ import { RegisterService } from './register.service';
         </div>
     `,
     providers: [RegisterService],
-    imports: [ReactiveFormsModule, ErrorComponent]
+    imports: [ReactiveFormsModule, ErrorComponent],
+    changeDetection: ChangeDetectionStrategy.OnPush
 })
 export default class RegisterComponent {
     private router = inject(Router);

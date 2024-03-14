@@ -1,4 +1,4 @@
-import { Component, inject } from '@angular/core';
+import { ChangeDetectionStrategy, Component, inject } from '@angular/core';
 import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { ErrorComponent } from '../shared/ui/error.component';
 import { LoginService } from './login.service';
@@ -53,7 +53,8 @@ import { LoginService } from './login.service';
         </div>
     `,
     imports: [ErrorComponent, ReactiveFormsModule],
-    providers: [LoginService]
+    providers: [LoginService],
+    changeDetection: ChangeDetectionStrategy.OnPush
 })
 export default class LoginComponent {
     loginService = inject(LoginService);

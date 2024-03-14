@@ -1,4 +1,4 @@
-import { Component, effect, inject, input } from '@angular/core';
+import { ChangeDetectionStrategy, Component, effect, inject, input } from '@angular/core';
 import { RouterLink } from '@angular/router';
 import { ArticleMetaDataActionsComponent } from '../article-actions/article-actions.component';
 import { ArticleCommentFormComponent } from '../article-comment-form/article-comment-form.component';
@@ -76,7 +76,8 @@ import { ArticleBySlugService } from './article-meta-data.service';
         }
     `,
     providers: [ArticleBySlugService],
-    imports: [RouterLink, ArticleMetaDataActionsComponent, ArticleCommentsComponent, ArticleCommentFormComponent]
+    imports: [RouterLink, ArticleMetaDataActionsComponent, ArticleCommentsComponent, ArticleCommentFormComponent],
+    changeDetection: ChangeDetectionStrategy.OnPush
 })
 export default class ArticleFullPreviewComponent {
     slug = input.required<string>();

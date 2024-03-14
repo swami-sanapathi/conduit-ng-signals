@@ -43,4 +43,23 @@ export class ProfileArticleService {
                 this.articles.set(articles);
             });
     }
+
+    toggleFavorite(article: Article) {
+        const { slug, favorited } = article;
+        if (!favorited) {
+            this.http.post(`/articles/${slug}/favorite`, null).subscribe(() => {
+                const newArticles = this.articles().map((a) =>
+                    a.slug === slug ? { ...a, favorited: !favorited, favoritesCount: a.favoritesCount + 1 } : a
+                );
+                this.articles.set(newArticles);
+            });
+        } else {
+            this.http.delete(`/articles/${slug}/favorite`).subscribe(() => {
+                const newArticles = this.articles().map((a) =>
+                    a.slug === slug ? { ...a, favorited: !favorited, favoritesCount: a.favoritesCount - 1 } : a
+                );
+                this.articles.set(newArticles);
+            });
+        }
+    }
 }

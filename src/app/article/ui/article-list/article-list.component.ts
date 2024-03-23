@@ -11,12 +11,12 @@ import { ArticlePreviewComponent } from '../article-preview/article-preview.comp
             @for (article of articles(); track article.id) {
                 <app-article-preview [article]="article" (toggleFavorite)="toggleFavorite.emit($event)" />
             } @empty {
-                No articles are here... yet.
+                <app-article-preview>No articles are here... yet.</app-article-preview>
             }
         } @else if (state() === 'loading') {
-            Loading articles...
+            <app-article-preview>Loading articles...</app-article-preview>
         } @else {
-            No articles are here... yet.
+            <app-article-preview>No articles are here... yet.</app-article-preview>
         }
     `
 })

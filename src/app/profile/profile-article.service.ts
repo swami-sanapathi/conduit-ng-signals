@@ -1,7 +1,8 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable, effect, inject, signal } from '@angular/core';
-import { EMPTY, catchError } from 'rxjs';
+import { EMPTY, catchError, takeUntil } from 'rxjs';
 import { ApiStatus, Article } from '../shared/models';
+import { injectDestroy } from '../utils/destory-notifier';
 import { ProfileService } from './profile.service';
 import { PROFILE_TOGGLE_TYPE } from './profile.toggle.di';
 
@@ -9,6 +10,7 @@ import { PROFILE_TOGGLE_TYPE } from './profile.toggle.di';
 export class ProfileArticleService {
     articles = signal<Article[]>([]);
     state = signal<ApiStatus>('loading');
+    private destroy = injectDestroy();
 
     private http = inject(HttpClient);
     private profileService = inject(ProfileService);
@@ -33,6 +35,7 @@ export class ProfileArticleService {
                 params: this.toggleType === 'my' ? { author: username } : { favorited: username }
             })
             .pipe(
+                takeUntil(this.destroy),
                 catchError(() => {
                     this.state.set('error');
                     return EMPTY;

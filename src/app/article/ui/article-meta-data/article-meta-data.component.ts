@@ -72,7 +72,7 @@ import { ArticleBySlugService } from './article-meta-data.service';
                 </div>
             </div>
         } @else {
-            <div class="article-preview">Loading...</div>
+            <div>Loading article...</div>
         }
     `,
     providers: [ArticleBySlugService],

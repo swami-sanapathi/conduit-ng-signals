@@ -7,16 +7,16 @@ import { Article } from '../../../shared/models/articles';
     selector: 'app-article-preview',
     standalone: true,
     template: `
-        @if (article(); as article) {
-            <div class="article-preview">
+        <div class="article-preview">
+            @if (article(); as article) {
                 <div class="article-meta">
-                    <a [routerLink]="['/profile', article.author.username]" routerLinkActive="router-link-active"
-                        ><img alt="user" [src]="article.author.image"
-                    /></a>
+                    <a [routerLink]="['/profile', article.author.username]" routerLinkActive="router-link-active">
+                        <img alt="user" [src]="article.author.image" />
+                    </a>
                     <div class="info">
-                        <a [routerLink]="['/profile', article.author.username]" class="author">{{
-                            article.author.username
-                        }}</a>
+                        <a [routerLink]="['/profile', article.author.username]" class="author">
+                            {{ article.author.username }}
+                        </a>
                         <span class="date">{{ article.createdAt | date: 'MMM d, y' }}</span>
                     </div>
                     <button
@@ -25,7 +25,8 @@ import { Article } from '../../../shared/models/articles';
                         [class.btn-primary]="article.favorited"
                         (click)="toggleFavorite.emit(article)"
                     >
-                        <i class="ion-heart"></i> {{ article.favoritesCount }}
+                        <i class="ion-heart"></i>
+                        {{ article.favoritesCount }}
                     </button>
                 </div>
                 <a class="preview-link" (click)="navigateToArticle(article.slug)">
@@ -39,15 +40,15 @@ import { Article } from '../../../shared/models/articles';
                     </ul>
                     <span>Read more...</span>
                 </a>
-            </div>
-        } @else {
-            <ng-content></ng-content>
-        }
+            } @else {
+                <ng-content></ng-content>
+            }
+        </div>
     `,
     imports: [RouterLink, DatePipe]
 })
 export class ArticlePreviewComponent {
-    article = input.required<Article>();
+    article = input<Article>();
     toggleFavorite = output<Article>();
     private router = inject(Router);
 

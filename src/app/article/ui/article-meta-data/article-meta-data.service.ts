@@ -1,6 +1,8 @@
 import { HttpClient } from '@angular/common/http';
-import { Injectable, computed, inject, signal } from '@angular/core';
+import { Injectable, SecurityContext, computed, inject, signal } from '@angular/core';
+import { DomSanitizer } from '@angular/platform-browser';
 import { Router } from '@angular/router';
+import { marked } from 'marked';
 import { takeUntil } from 'rxjs';
 import { ApiStatus, Article, Comment, UserProfile } from '../../../shared/models';
 import { AuthService } from '../../../shared/services/auth.service';
@@ -12,6 +14,7 @@ export class ArticleBySlugService {
     private router = inject(Router);
     private destroy = injectDestroy();
     private authService = inject(AuthService);
+    private sanitizer = inject(DomSanitizer);
     private _article = signal<Article | null>(null);
     state = signal<ApiStatus>('loading');
     comments = signal<Comment[]>([]);
@@ -23,10 +26,16 @@ export class ArticleBySlugService {
 
     getArticleBySlug(slug: string) {
         this.state.set('loading');
-        return this.http.get<{ article: Article }>(`/articles/${slug}`).subscribe(({ article }) => {
-            this._article.set(article);
-            this.state.set('success');
-        });
+        return this.http
+            .get<{ article: Article }>(`/articles/${slug}`)
+            .pipe(takeUntil(this.destroy))
+            .subscribe(({ article }) => {
+                this._article.set(article);
+                if (article.body) {
+                    article.body = this.sanitizer.sanitize(SecurityContext.HTML, marked(article.body));
+                }
+                this.state.set('success');
+            });
     }
 
     postComment(newComment: string, slug: string | undefined) {
@@ -50,9 +59,12 @@ export class ArticleBySlugService {
     }
 
     getComments(slug: string) {
-        return this.http.get<{ comments: Comment[] }>(`/articles/${slug}/comments`).subscribe(({ comments }) => {
-            this.comments.set(comments);
-        });
+        return this.http
+            .get<{ comments: Comment[] }>(`/articles/${slug}/comments`)
+            .pipe(takeUntil(this.destroy))
+            .subscribe(({ comments }) => {
+                this.comments.set(comments);
+            });
     }
 
     toggleFavorite({ slug, favorited }: { slug: string; favorited: boolean }) {

@@ -8,28 +8,27 @@ import { UserInfoComponent } from './user-info/user-info.component';
     selector: 'app-profile',
     standalone: true,
     template: `
-        @if (profileService.status() === 'success') {
-            <div class="profile-page">
+        <div class="block profile-page">
+            @if (profileService.status() === 'success') {
                 @if (profileService.user(); as user) {
                     <app-user-info
                         [user]="user"
                         [isOwner]="profileService.isOwner()"
                         (followToggle)="profileService.updateFollowStatus(user)"
                     />
-                }
-
-                <div class="container">
-                    <div class="row">
-                        <div class="col-xs-12 col-md-10 offset-md-1">
-                            <app-profile-article-toggle [username]="profileService.user()?.username" />
-                            <router-outlet />
+                    <div class="container">
+                        <div class="row">
+                            <div class="col-xs-12 col-md-10 offset-md-1">
+                                <app-profile-article-toggle [username]="user?.username" />
+                                <router-outlet />
+                            </div>
                         </div>
                     </div>
-                </div>
-            </div>
-        } @else {
-            <ng-container>loading...</ng-container>
-        }
+                }
+            } @else {
+                <ng-container>Loading profile...</ng-container>
+            }
+        </div>
     `,
     providers: [ProfileService],
     imports: [RouterOutlet, ProfileArticleToggleComponent, RouterLink, UserInfoComponent],

@@ -5,61 +5,64 @@ import { Article, NewArticle } from '../../models';
 @Component({
     selector: 'app-shared-article-form',
     standalone: true,
-    template: ` <form #form="ngForm">
-        <fieldset>
-            <fieldset class="form-group">
-                <input
-                    type="text"
-                    class="form-control form-control-lg"
-                    placeholder="Article Title"
-                    name="title"
-                    [(ngModel)]="articleFormData().title"
-                />
+    template: `
+        <form #form="ngForm">
+            <fieldset>
+                <fieldset class="form-group">
+                    <input
+                        type="text"
+                        class="form-control form-control-lg"
+                        placeholder="Article Title"
+                        name="title"
+                        [(ngModel)]="articleFormData().title"
+                    />
+                </fieldset>
+                <fieldset class="form-group">
+                    <input
+                        type="text"
+                        class="form-control"
+                        placeholder="What's this article about?"
+                        name="description"
+                        [(ngModel)]="articleFormData().description"
+                    />
+                </fieldset>
+                <fieldset class="form-group">
+                    <textarea
+                        class="form-control"
+                        rows="8"
+                        placeholder="Write your article (in markdown)"
+                        name="body"
+                        [(ngModel)]="articleFormData().body"
+                    ></textarea>
+                </fieldset>
+                <fieldset class="form-group">
+                    <input
+                        type="text"
+                        class="form-control"
+                        placeholder="Enter tags"
+                        #tagInput
+                        (keyup.enter)="addTag(tagInput); tagInput.value = ''"
+                    />
+                    <div class="tag-list">
+                        @for (item of articleFormData().tagList; track $index) {
+                            <span class="tag-default tag-pill">
+                                <i class="ion-close-round" (click)="removeTag(item)"></i>
+                                {{ item }}
+                            </span>
+                        }
+                    </div>
+                </fieldset>
+                <button
+                    class="btn btn-lg pull-xs-right btn-primary"
+                    type="button"
+                    [disabled]="!form.valid"
+                    (click)="publish.emit(articleFormData())"
+                >
+                    Publish Article
+                </button>
             </fieldset>
-            <fieldset class="form-group">
-                <input
-                    type="text"
-                    class="form-control"
-                    placeholder="What's this article about?"
-                    name="description"
-                    [(ngModel)]="articleFormData().description"
-                />
-            </fieldset>
-            <fieldset class="form-group">
-                <textarea
-                    class="form-control"
-                    rows="8"
-                    placeholder="Write your article (in markdown)"
-                    name="body"
-                    [(ngModel)]="articleFormData().body"
-                ></textarea>
-            </fieldset>
-            <fieldset class="form-group">
-                <input
-                    type="text"
-                    class="form-control"
-                    placeholder="Enter tags"
-                    #tagInput
-                    (keyup.enter)="addTag(tagInput); tagInput.value = ''"
-                />
-                <div class="tag-list">
-                    @for (item of articleFormData().tagList; track $index) {
-                        <span class="tag-default tag-pill">
-                            <i class="ion-close-round" (click)="removeTag(item)"></i> {{ item }}
-                        </span>
-                    }
-                </div>
-            </fieldset>
-            <button
-                class="btn btn-lg pull-xs-right btn-primary"
-                type="button"
-                [disabled]="!form.valid"
-                (click)="publish.emit(articleFormData())"
-            >
-                Publish Article
-            </button>
-        </fieldset>
-    </form>`,
+        </form>
+    `,
     imports: [FormsModule]
 })
 export class AppSharedArticleFormComponent {
@@ -81,7 +84,7 @@ export class AppSharedArticleFormComponent {
                     this.articleFormData.set({
                         title: article.title,
                         description: article.description,
-                        body: article.body,
+                        body: article.body || '',
                         tagList: article.tagList
                     });
                 }

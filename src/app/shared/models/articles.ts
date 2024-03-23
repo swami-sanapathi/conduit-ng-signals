@@ -4,7 +4,7 @@ export interface Article {
     id: number;
     title: string;
     slug: string;
-    body: string;
+    body: string | null;
     authorId: number;
     createdAt: string;
     updatedAt: string;

@@ -57,6 +57,6 @@ export default class HomeComponent {
     }
 
     getArticlesByTag(tag: string) {
-        this.articlesService.getArticles('tag', tag);
+        this.articlesService.getArticles('global', tag);
     }
 }

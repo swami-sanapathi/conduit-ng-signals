@@ -40,6 +40,7 @@ export default [
     {
         path: 'article/:slug',
         title: 'Article',
-        loadComponent: () => import('../article/ui/article-meta-data/article-meta-data.component')
+        loadComponent: () => import('../article/ui/article-meta-data/article-meta-data.component'),
+        canMatch: [authGuard]
     }
 ] as Routes;

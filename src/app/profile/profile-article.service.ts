@@ -47,22 +47,19 @@ export class ProfileArticleService {
             });
     }
 
-    toggleFavorite(article: Article) {
-        const { slug, favorited } = article;
-        if (!favorited) {
-            this.http.post(`/articles/${slug}/favorite`, null).subscribe(() => {
-                const newArticles = this.articles().map((a) =>
-                    a.slug === slug ? { ...a, favorited: !favorited, favoritesCount: a.favoritesCount + 1 } : a
-                );
-                this.articles.set(newArticles);
-            });
-        } else {
-            this.http.delete(`/articles/${slug}/favorite`).subscribe(() => {
-                const newArticles = this.articles().map((a) =>
-                    a.slug === slug ? { ...a, favorited: !favorited, favoritesCount: a.favoritesCount - 1 } : a
-                );
-                this.articles.set(newArticles);
-            });
-        }
+    toggleFavorite(toggledArticle: Article) {
+        const { slug, favorited } = toggledArticle;
+        const request = favorited
+            ? this.http.delete<{ article: Article }>(`/articles/${slug}/favorite`)
+            : this.http.post<{ article: Article }>(`/articles/${slug}/favorite`, null);
+
+        request.subscribe(({ article }) => {
+            this.articles.update((articles) =>
+                articles.map((a) => {
+                    if (a.slug === article.slug) return article;
+                    return a;
+                })
+            );
+        });
     }
 }

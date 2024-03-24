@@ -1,6 +1,6 @@
 import { DatePipe } from '@angular/common';
-import { Component, inject, input, output } from '@angular/core';
-import { Router, RouterLink } from '@angular/router';
+import { Component, input, output } from '@angular/core';
+import { RouterLink } from '@angular/router';
 import { Article } from '../../../shared/models/articles';
 
 @Component({
@@ -29,7 +29,7 @@ import { Article } from '../../../shared/models/articles';
                         {{ article.favoritesCount }}
                     </button>
                 </div>
-                <a class="preview-link" (click)="navigateToArticle(article.slug)">
+                <a class="preview-link" [routerLink]="['/article', article.slug]">
                     <h1>{{ article.title }}</h1>
                     <p>{{ article.description }}</p>
 
@@ -50,9 +50,4 @@ import { Article } from '../../../shared/models/articles';
 export class ArticlePreviewComponent {
     article = input<Article>();
     toggleFavorite = output<Article>();
-    private router = inject(Router);
-
-    navigateToArticle(slug: string) {
-        this.router.navigate(['/article', slug]);
-    }
 }

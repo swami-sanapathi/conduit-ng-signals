@@ -5,7 +5,7 @@ import { EMPTY, catchError, takeUntil } from 'rxjs';
 import { ApiStatus, Article } from '../shared/models';
 import { injectDestroy } from '../utils/destory-notifier';
 
-type FeedType = 'global' | 'user' | 'tag';
+type FeedType = 'global' | 'user';
 
 @Injectable()
 export class ArticlesService {
@@ -25,7 +25,7 @@ export class ArticlesService {
         this.selectedTag.set(tag || null);
 
         const api = type === 'global' ? '/articles' : '/articles/feed';
-        const params = type === 'tag' ? new HttpParams().set('tag', tag || '') : undefined;
+        const params = tag ? new HttpParams().set('tag', tag || '') : undefined;
 
         this.http
             .get<{ articles: Article[]; articlesCount: number }>(api, {
@@ -50,50 +50,24 @@ export class ArticlesService {
             });
     }
 
-    getArticlesByTag(tag: string) {
-        this.destroy.next();
-        this.http
-            .get<{ articles: Article[] }>('/articles', {
-                params: {
-                    tag
-                }
-            })
-            .pipe(takeUntil(this.destroy))
-            .subscribe({
-                next: ({ articles }) => {
-                    this.articles.set(articles);
-                    this.state.set('success');
-                },
-                error: () => {
-                    this.state.set('error');
-                }
-            });
-    }
-
     toggleFavorite(article: Article): void {
         this.destroy.next();
-        if (article.favorited) {
-            this.http
-                .delete(`/articles/${article.slug}/favorite`)
-                .pipe(takeUntil(this.destroy))
-                .subscribe(() => {
-                    this.articles.update((articles) => {
-                        const index = articles.findIndex((a) => a.slug === article.slug);
-                        articles[index] = { ...article, favorited: false, favoritesCount: article.favoritesCount - 1 };
-                        return [...articles];
-                    });
-                });
-        } else {
-            this.http
-                .post(`/articles/${article.slug}/favorite`, null)
-                .pipe(takeUntil(this.destroy))
-                .subscribe(() => {
-                    this.articles.update((articles) => {
-                        const index = articles.findIndex((a) => a.slug === article.slug);
-                        articles[index] = { ...article, favorited: true, favoritesCount: article.favoritesCount + 1 };
-                        return [...articles];
-                    });
-                });
-        }
+        const request = article.favorited
+            ? this.http.delete(`/articles/${article.slug}/favorite`)
+            : this.http.post(`/articles/${article.slug}/favorite`, null);
+
+        request.pipe(takeUntil(this.destroy)).subscribe(() => {
+            this.articles.update((articles) => {
+                const index = articles.findIndex((a) => a.slug === article.slug);
+                if (index !== -1) {
+                    articles[index] = {
+                        ...article,
+                        favorited: !article.favorited,
+                        favoritesCount: article.favorited ? article.favoritesCount - 1 : article.favoritesCount + 1
+                    };
+                }
+                return [...articles];
+            });
+        });
     }
 }

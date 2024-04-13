@@ -8,6 +8,6 @@ We've gone to great lengths to adhere to the **Angular 17** community styleguide
 
 For more information on how to this works with other frontends/backends, head over to the [RealWorld](https://github.com/gothinkster/realworld) repo.
 
-#### TODO
 
--   type narrowing in template with `state` and `article` (see `article-list.component.html`)
+
+

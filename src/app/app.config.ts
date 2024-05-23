@@ -1,5 +1,5 @@
 import { provideHttpClient, withInterceptors } from '@angular/common/http';
-import { ApplicationConfig } from '@angular/core';
+import { ApplicationConfig, ENVIRONMENT_INITIALIZER, inject } from '@angular/core';
 import {
     TitleStrategy,
     provideRouter,
@@ -8,14 +8,19 @@ import {
     withViewTransitions
 } from '@angular/router';
 import routes from './app.routes';
+import environment from './environment';
 import { provideApiUrl } from './providers/api-url';
+import { ENVIRONMENT } from './providers/environment-config';
 import { provideApiPrefix } from './shared/interceptors/api-prefix.interceptor';
 import { provideAuthInterceptor } from './shared/interceptors/auth.interceptor';
+import { GoogleAnalytics } from './shared/services/analytics.service';
 import { TitleStrategyService } from './shared/services/title.service';
 
 export const appConfig: ApplicationConfig = {
     providers: [
         { provide: TitleStrategy, useClass: TitleStrategyService },
+        { provide: ENVIRONMENT, useValue: environment },
+        { provide: ENVIRONMENT_INITIALIZER, useValue: () => inject(GoogleAnalytics), multi: true },
         provideApiUrl({ url: 'https://api.realworld.io/api' }),
         provideRouter(routes, withViewTransitions(), withComponentInputBinding(), withHashLocation()),
         provideHttpClient(withInterceptors([provideApiPrefix, provideAuthInterceptor]))

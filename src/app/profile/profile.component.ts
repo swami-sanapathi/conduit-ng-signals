@@ -1,5 +1,5 @@
 import { ChangeDetectionStrategy, Component, effect, inject, input } from '@angular/core';
-import { RouterLink, RouterOutlet } from '@angular/router';
+import { RouterOutlet } from '@angular/router';
 import { ProfileArticleToggleComponent } from './profile-article-toggle/profile-article-toggle.component';
 import { ProfileService } from './profile.service';
 import { UserInfoComponent } from './user-info/user-info.component';
@@ -30,7 +30,7 @@ import { UserInfoComponent } from './user-info/user-info.component';
         </div>
     `,
     providers: [ProfileService],
-    imports: [RouterOutlet, ProfileArticleToggleComponent, RouterLink, UserInfoComponent],
+    imports: [RouterOutlet, ProfileArticleToggleComponent, UserInfoComponent],
     changeDetection: ChangeDetectionStrategy.OnPush
 })
 export default class ProfileComponent {

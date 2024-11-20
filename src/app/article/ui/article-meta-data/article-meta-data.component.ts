@@ -1,5 +1,4 @@
 import { ChangeDetectionStrategy, Component, effect, inject, input } from '@angular/core';
-import { RouterLink } from '@angular/router';
 import { ArticleMetaDataActionsComponent } from '../article-actions/article-actions.component';
 import { ArticleCommentFormComponent } from '../article-comment-form/article-comment-form.component';
 import { ArticleCommentsComponent } from '../article-comments/article-comments.component';
@@ -75,7 +74,7 @@ import { ArticleBySlugService } from './article-meta-data.service';
         }
     `,
     providers: [ArticleBySlugService],
-    imports: [RouterLink, ArticleMetaDataActionsComponent, ArticleCommentsComponent, ArticleCommentFormComponent],
+    imports: [ArticleMetaDataActionsComponent, ArticleCommentsComponent, ArticleCommentFormComponent],
     changeDetection: ChangeDetectionStrategy.OnPush
 })
 export default class ArticleFullPreviewComponent {

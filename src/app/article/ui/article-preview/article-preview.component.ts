@@ -5,7 +5,6 @@ import { Article } from '../../../shared/models/articles';
 
 @Component({
     selector: 'app-article-preview',
-    standalone: true,
     template: `
         <div class="article-preview">
             @if (article(); as article) {

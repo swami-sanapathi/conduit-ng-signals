@@ -4,7 +4,6 @@ import { ErrorComponent } from '../shared/ui/error.component';
 import { LoginService } from './login.service';
 
 @Component({
-    standalone: true,
     template: `
         <div class="auth-page">
             <div class="container page">

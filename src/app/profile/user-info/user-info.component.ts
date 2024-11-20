@@ -4,7 +4,6 @@ import { UserProfile } from '../../shared/models';
 
 @Component({
     selector: 'app-user-info',
-    standalone: true,
     template: `
         <div class="user-info">
             <div class="container">

@@ -5,7 +5,6 @@ import { ErrorComponent } from '../shared/ui/error.component';
 import { RegisterService } from './register.service';
 
 @Component({
-    standalone: true,
     template: `
         <div class="auth-page">
             <div class="container page">

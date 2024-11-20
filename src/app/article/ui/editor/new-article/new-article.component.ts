@@ -5,7 +5,6 @@ import { EditArticleService } from '../editor.service';
 
 @Component({
     selector: 'app-new-article',
-    standalone: true,
     template: `
         <app-shared-layout>
             <app-shared-article-form (publish)="articleService.publishArticle($event, 'new')" />

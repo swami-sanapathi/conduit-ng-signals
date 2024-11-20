@@ -8,7 +8,6 @@ import { BannerComponent } from './banner/banner.component';
 import { FeedToggleComponent } from './feed-toggle/feed-toggle.component';
 
 @Component({
-    standalone: true,
     template: `
         <div class="home-page">
             <app-banner />

@@ -6,7 +6,6 @@ import { HeaderComponent } from './header/header.component';
 
 @Component({
     selector: 'app-layout',
-    standalone: true,
     template: `
         <app-header [username]="authService._user()?.username" [isAuthenticated]="authService._isAuthenticated()" />
 

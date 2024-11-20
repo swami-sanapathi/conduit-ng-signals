@@ -7,7 +7,6 @@ import { EditArticleService } from '../editor.service';
 
 @Component({
     selector: 'app-edit-article',
-    standalone: true,
     template: `
         <app-shared-layout>
             @if (articleService.article(); as article) {

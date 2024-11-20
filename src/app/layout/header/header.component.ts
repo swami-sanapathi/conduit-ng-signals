@@ -3,7 +3,6 @@ import { RouterLink, RouterLinkActive } from '@angular/router';
 
 @Component({
     selector: 'app-header',
-    standalone: true,
     imports: [RouterLink, RouterLinkActive],
     template: `
         <nav class="navbar navbar-light">
@@ -16,8 +15,9 @@ import { RouterLink, RouterLinkActive } from '@angular/router';
                             routerLink="/"
                             routerLinkActive="active"
                             [routerLinkActiveOptions]="{ exact: true }"
-                            >Home</a
                         >
+                            Home
+                        </a>
                     </li>
                     @if (isAuthenticated()) {
                         <li class="nav-item">
@@ -27,7 +27,8 @@ import { RouterLink, RouterLinkActive } from '@angular/router';
                                 routerLinkActive="active"
                                 [routerLinkActiveOptions]="{ exact: true }"
                             >
-                                <i class="ion-compose"></i>&nbsp;New Article
+                                <i class="ion-compose"></i>
+                                &nbsp;New Article
                             </a>
                         </li>
                         <li class="nav-item">
@@ -37,7 +38,8 @@ import { RouterLink, RouterLinkActive } from '@angular/router';
                                 routerLinkActive="active"
                                 [routerLinkActiveOptions]="{ exact: true }"
                             >
-                                <i class="ion-gear-a"></i>&nbsp;Settings
+                                <i class="ion-gear-a"></i>
+                                &nbsp;Settings
                             </a>
                         </li>
                         <li class="nav-item">
@@ -58,8 +60,9 @@ import { RouterLink, RouterLinkActive } from '@angular/router';
                                 [routerLink]="['/login']"
                                 routerLinkActive="active"
                                 [routerLinkActiveOptions]="{ exact: true }"
-                                >Sign in</a
                             >
+                                Sign in
+                            </a>
                         </li>
                         <li class="nav-item">
                             <a
@@ -67,8 +70,9 @@ import { RouterLink, RouterLinkActive } from '@angular/router';
                                 [routerLink]="['/register']"
                                 routerLinkActive="active"
                                 [routerLinkActiveOptions]="{ exact: true }"
-                                >Sign up</a
                             >
+                                Sign up
+                            </a>
                         </li>
                     }
                 </ul>

@@ -7,7 +7,6 @@ import { ArticleBySlugService } from './article-meta-data.service';
 
 @Component({
     selector: 'app-article-full-preview',
-    standalone: true,
     template: `
         @if (articleService.authorArticle(); as article) {
             <div class="block article-page">

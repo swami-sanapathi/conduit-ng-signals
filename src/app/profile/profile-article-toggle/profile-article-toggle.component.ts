@@ -2,7 +2,6 @@ import { Component, input } from '@angular/core';
 import { RouterLink, RouterLinkActive } from '@angular/router';
 @Component({
     selector: 'app-profile-article-toggle',
-    standalone: true,
     template: `
         <div class="articles-toggle">
             <ul class="nav nav-pills outline-active">
@@ -12,8 +11,9 @@ import { RouterLink, RouterLinkActive } from '@angular/router';
                         [routerLink]="['/profile', username()]"
                         routerLinkActive="active"
                         [routerLinkActiveOptions]="{ exact: true }"
-                        >My Articles</a
                     >
+                        My Articles
+                    </a>
                 </li>
                 <li class="nav-item">
                     <a
@@ -21,8 +21,9 @@ import { RouterLink, RouterLinkActive } from '@angular/router';
                         [routerLink]="['/profile', username(), 'favorites']"
                         [routerLinkActiveOptions]="{ exact: true }"
                         routerLinkActive="active"
-                        >Favorited Articles</a
                     >
+                        Favorited Articles
+                    </a>
                 </li>
             </ul>
         </div>

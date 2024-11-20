@@ -4,7 +4,6 @@ import { AuthService } from '../shared/services/auth.service';
 import { SettingService } from './settings.service';
 
 @Component({
-    standalone: true,
     template: `
         <div class="settings-page">
             <div class="container page">

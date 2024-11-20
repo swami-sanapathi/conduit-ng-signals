@@ -4,7 +4,6 @@ import { Author } from '../../../shared/models';
 
 @Component({
     selector: 'app-article-comment-form',
-    standalone: true,
     template: `
         <form class="card comment-form" #form="ngForm">
             <div class="card-block">

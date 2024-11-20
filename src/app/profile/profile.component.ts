@@ -6,7 +6,6 @@ import { UserInfoComponent } from './user-info/user-info.component';
 
 @Component({
     selector: 'app-profile',
-    standalone: true,
     template: `
         <div class="block profile-page">
             @if (profileService.status() === 'success') {

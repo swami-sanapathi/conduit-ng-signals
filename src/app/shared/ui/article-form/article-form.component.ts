@@ -4,7 +4,6 @@ import { Article, NewArticle } from '../../models';
 
 @Component({
     selector: 'app-shared-article-form',
-    standalone: true,
     template: `
         <form #form="ngForm">
             <fieldset>

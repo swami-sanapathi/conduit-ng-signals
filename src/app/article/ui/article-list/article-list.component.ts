@@ -4,7 +4,6 @@ import { ArticlePreviewComponent } from '../article-preview/article-preview.comp
 
 @Component({
     selector: 'app-article-list',
-    standalone: true,
     imports: [ArticlePreviewComponent],
     template: `
         @if (state() === 'success') {

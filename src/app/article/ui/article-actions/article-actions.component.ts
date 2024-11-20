@@ -5,7 +5,6 @@ import { Article } from '../../../shared/models';
 
 @Component({
     selector: 'app-article-meta-data-actions',
-    standalone: true,
     template: `
         @if (article(); as article) {
             <div class="article-meta">
@@ -16,11 +15,13 @@ import { Article } from '../../../shared/models';
                 </div>
                 @if (isOwner()) {
                     <a class="btn btn-sm btn-outline-secondary" [routerLink]="['/editor', article.slug]">
-                        <i class="ion-edit"></i> Edit Article
+                        <i class="ion-edit"></i>
+                        Edit Article
                     </a>
                     &nbsp;
                     <button class="btn btn-sm btn-outline-danger" (click)="deleteArticle.emit(article.slug)">
-                        <i class="ion-trash-a"></i> Delete Article
+                        <i class="ion-trash-a"></i>
+                        Delete Article
                     </button>
                 } @else {
                     <button
